@@ -57,32 +57,29 @@ class DB
 	    else
 		return false;
 	}
-	elseif(strtolower(substr($sql,0,6)) == 'update')
-	{
+	elseif(strtolower(substr($sql,0,6)) == 'update') {
 	    $resource = odbc_exec($this->db_server, $sql);
 	    if($resource)
-		return true;
+			return true;
 	    else
-		return false;
+			return false;
 
 	}
-	elseif(strtolower(substr($sql,0,6)) == 'insert')
-	{
+	elseif(strtolower(substr($sql,0,6)) == 'insert') {
 	    $resource = odbc_exec($this->db_server,$sql);
 	    if($resource)
-		return true;
+			return true;
 	    else
-		return false;
+			return false;
 	}
-	elseif(strtolower(substr($sql,0,6)) == 'delete')
-	{
+	elseif(strtolower(substr($sql,0,6)) == 'delete') {
 		$resource = odbc_exec($this->db_server,$sql);
 	    if($resource)
-		return true;
+			return true;
 	    else
-		return false;
+			return false;
 	}
-    }
+}
     
 }
 ?>

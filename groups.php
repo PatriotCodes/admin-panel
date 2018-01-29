@@ -31,8 +31,11 @@ $view->display('header.tpl');
                 echo '<td scope="row">'.$row['categoryID'].'</td>';
                 echo '<td>'.$row['categoryName'].'</td>';
                 echo '<td class="">
-                  <input name="edit" id="$row[categoryID]" class="btn btn-info" value="Изменить" type="submit">
-                  <input name="delete" id="'.$row['categoryID'].'" class="btn btn-danger deleteRowButton" value="Удалить" type="submit">
+                  <form action="./updateGroup.php" method="get">
+                    <input name="edit" id="'.$row['categoryID'].'" class="btn btn-info" value="Изменить" type="submit">
+                    <input type="hidden" value="'.$row['categoryID'].'" name="idInput"/>
+                    <input name="delete" id="'.$row['categoryID'].'" class="btn btn-danger deleteRowButton" value="Удалить" type="button">
+                  </form>
                 </td>';
                 echo '</tr>';
               }
