@@ -9,19 +9,16 @@ $view->display('header.tpl');
 
 ?>
 
-<div class="container"
-<div class="row">
-    <div class="span12 columns">
-        <div class="form-group">
-    		<div class="col-sm-10">
-		</div>
-	</div>
+<div class="container">
+  <div class="text-right mt-2 mb-2">
+    <input name="add" onclick="location.href = './addGroup.php'" class="btn btn-success" value="+ Добавить группу">
+  </div>
 	<table class="table table-striped table-bordered table-condensed">
-        <thead>
+        <thead class="thead-dark">
 	        <tr>
-            <th class="yellow header headerSortDown">ID</th>
-            <th class="red header">Название</th>
-            <th class="red header"></th>
+            <th scope="col">ID</th>
+            <th scope="col">Название</th>
+            <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -31,19 +28,17 @@ $view->display('header.tpl');
               foreach($categories as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['categoryID'].'</td>';
+                echo '<td scope="row">'.$row['categoryID'].'</td>';
                 echo '<td>'.$row['categoryName'].'</td>';
                 echo '<td class="">
-                  <input name="edit" id="$row[categoryID]" class="btn btn-info" value="View & Edit" type="submit">
-                  <input name="delete" id="'.$row['categoryID'].'" class="btn btn-danger deleteRowButton" value="Delete" type="submit">
+                  <input name="edit" id="$row[categoryID]" class="btn btn-info" value="Изменить" type="submit">
+                  <input name="delete" id="'.$row['categoryID'].'" class="btn btn-danger deleteRowButton" value="Удалить" type="submit">
                 </td>';
                 echo '</tr>';
               }
               ?>   
         </tbody>
         </table>
-    </div>
-</div>
 </div>
 
 <?php $view->display('footer.tpl'); ?>

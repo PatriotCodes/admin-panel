@@ -29,14 +29,10 @@ class DB
 		$table = false;
 		$numfields = odbc_num_fields($resource);
 		$num_rows = odbc_num_rows($resource);
-//		var_dump("--".$num_rows);
 		$r = 0;
 		$k = 1;
 		while($row = odbc_fetch_array($resource))
 		{
-		
-		//print_r($row);
-		
 			for ($i=1; $i <= $numfields; $i++)
 		    {
 			if(!empty($this->index) && $this->index == odbc_field_name ($resource, $i)) $k = $i;

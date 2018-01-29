@@ -13,22 +13,19 @@ if(isset($_POST['delete'])) {
 }
 ?>
 
-<div class="container"
-<div class="row">
-    <div class="span12 columns">
-        <div class="form-group">
-    		<div class="col-sm-10">
-		</div>
-	</div>
-	<table class="table table-striped table-bordered table-condensed">
-        <thead>
+	<div class="container">
+  <div class="text-right mt-2 mb-2">
+    <input name="add" onclick="location.href = './addAction.php'" class="btn btn-success" value="+ Добавить ресурс">
+  </div>
+  <table class="table table-striped table-bordered table-condensed">
+        <thead class="thead-dark">
 	        <tr>
-            <th class="yellow header headerSortDown">ID</th>
-            <th class="red header">Название</th>
-            <th class="red header">Строка</th>
-            <th class="red header">Аргументы</th>
-            <th class="red header">Группа</th>
-            <th class="red header"></th>
+            <th scope="col">ID</th>
+            <th scope="col">Название</th>
+            <th scope="col">Строка</th>
+            <th scope="col">Аргументы</th>
+            <th scope="col">Группа</th>
+            <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -39,14 +36,14 @@ if(isset($_POST['delete'])) {
               {
                 $category = $db->query("SELECT categoryName FROM actioncategory WHERE categoryID = '$row[categoryID]'");
                 echo '<tr>';
-                echo '<td>'.$row['actionID'].'</td>';
+                echo '<td scope="row">'.$row['actionID'].'</td>';
                 echo '<td>'.$row['actionName'].'</td>';
                 echo '<td>'.$row['actionString'].'</td>';
                 echo '<td>'.$row['actionArguments'].'</td>';
                 echo '<td>'.$category['categoryName'].'</td>';
                 echo '<td class="">
-                  <input name="edit" id="$row[categoryID]" class="btn btn-info" value="View & Edit" type="submit">
-                  <input name="delete" id="$row[actionID]" class="btn btn-danger deleteRowButton" value="Delete" type="submit" onClick="">
+                  <h2><input name="edit" id="$row[categoryID]" class="btn btn-info" value="Изменить" type="submit"></h2>
+                  <h2><input name="delete" id="$row[actionID]" class="btn btn-danger deleteRowButton" value="Удалить" type="submit"></h2>
                 </td>';
                 echo '</tr>';
               }
@@ -54,7 +51,5 @@ if(isset($_POST['delete'])) {
         </tbody>
         </table>
     </div>
-</div>
-</div>
 
 <?php $view->display('footer.tpl');?>
