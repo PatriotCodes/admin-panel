@@ -5,7 +5,9 @@ require_once(LIBRARY_PATH."/db.class.php");
 
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
-$view->display('header.tpl'); ?>
+$view->display('header.tpl');
+
+?>
 
 <div class="container"
 <div class="row">
@@ -17,7 +19,6 @@ $view->display('header.tpl'); ?>
 	<table class="table table-striped table-bordered table-condensed">
         <thead>
 	        <tr>
-            <th class="header">#</th>
             <th class="yellow header headerSortDown">ID</th>
             <th class="red header">Название</th>
             <th class="red header"></th>
@@ -27,17 +28,14 @@ $view->display('header.tpl'); ?>
             <?php
               $db = new DB();
               $categories = $db->query("SELECT * FROM actioncategory");
-              $counter = 0;
               foreach($categories as $row)
               {
-              	$counter++;
                 echo '<tr>';
-                echo '<td>'.$counter.'</td>';
                 echo '<td>'.$row['categoryID'].'</td>';
                 echo '<td>'.$row['categoryName'].'</td>';
                 echo '<td class="">
-                  <a href="/actionGroups/update/'.$row['categoryID'].'" class="btn btn-info">view & edit</a>  
-                  <a href="/actionGroups/delete/'.$row['categoryID'].'" class="btn btn-danger">delete</a>
+                  <input name="edit" id="$row[categoryID]" class="btn btn-info" value="View & Edit" type="submit">
+                  <input name="delete" id="'.$row['categoryID'].'" class="btn btn-danger deleteRowButton" value="Delete" type="submit">
                 </td>';
                 echo '</tr>';
               }
@@ -47,4 +45,5 @@ $view->display('header.tpl'); ?>
     </div>
 </div>
 </div>
+
 <?php $view->display('footer.tpl'); ?>

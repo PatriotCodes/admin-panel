@@ -24,14 +24,15 @@ $config = array(
     Constants for heavily used paths.
     ex. of use: require_once(LIBRARY_PATH . "Paginator.php")
 */
+    
 defined("LIBRARY_PATH")
     or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
      
 defined("TEMPLATES_PATH")
     or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates'));
-	
-defined("VIEWS_PATH")
-    or define("VIEWS_PATH", realpath(dirname(__FILE__) . '/views'));
+
+defined("CONTROLLERS_PATH")
+    or define("CONTROLLERS_PATH", realpath(dirname(__FILE__) . '/controllers'));
 
 ini_set("error_reporting", "true");
 error_reporting(E_ALL|E_STRCT);

@@ -4,7 +4,7 @@ class DB
 {
     function __construct()
     {
-    	include "./resources/config.php";
+    	include $_SERVER['DOCUMENT_ROOT']."/admin-panel/resources/config.php";
 		$this->host = $config["db"]["db1"]["host"];
 		$this->username = $config["db"]["db1"]["username"];
 		$this->password = $config["db"]["db1"]["password"];
@@ -77,9 +77,15 @@ class DB
 		return true;
 	    else
 		return false;
-
 	}
-
+	elseif(strtolower(substr($sql,0,6)) == 'delete')
+	{
+		$resource = odbc_exec($this->db_server,$sql);
+	    if($resource)
+		return true;
+	    else
+		return false;
+	}
     }
     
 }
