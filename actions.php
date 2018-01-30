@@ -6,11 +6,9 @@ require_once(LIBRARY_PATH."/db.class.php");
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
 $view->display('header.tpl');
-
-if(isset($_POST['delete'])) {
-  $db = new DB();
-  $db->query("DELETE FROM workaction WHERE actionID = $_POST[id]");
-}
+$colNames = array('ID','Название','Строка','Аргументы','Группа');
+$view->set('options',$colNames);
+$view->display('filterForm.tpl');
 ?>
 
 	<div class="container">
