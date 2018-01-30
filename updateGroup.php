@@ -10,7 +10,6 @@ $categoryName = $db->query("SELECT categoryName FROM actioncategory WHERE catego
 
 if (isset($_POST['categoryName'])) {
 	$success = $db->query("UPDATE actionCategory SET categoryName = N'$_POST[categoryName]' WHERE categoryID = '$_GET[idInput]'");
-  $success = true;
 } else {
 	$success = false;
 }

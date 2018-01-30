@@ -15,7 +15,7 @@ if(isset($_POST['delete'])) {
 
 	<div class="container">
   <div class="text-right mt-2 mb-2">
-    <input name="add" onclick="location.href = './addAction.php'" class="btn btn-success" value="+ Добавить ресурс">
+        <button name="add" onclick="location.href = './addAction.php'" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><a class="ml-2">Добавить ресурс</a></button>
   </div>
   <table class="table table-striped table-bordered table-condensed">
         <thead class="thead-dark">
@@ -42,8 +42,11 @@ if(isset($_POST['delete'])) {
                 echo '<td>'.$row['actionArguments'].'</td>';
                 echo '<td>'.$category['categoryName'].'</td>';
                 echo '<td class="">
-                  <h2><input name="edit" id="$row[categoryID]" class="btn btn-info" value="Изменить" type="submit"></h2>
-                  <h2><input name="delete" id="$row[actionID]" class="btn btn-danger deleteRowButton" value="Удалить" type="submit"></h2>
+                <form action="./updateAction.php" method="get">
+                  <input name="edit" id="$row[actionID]" class="btn btn-info mb-1" value="Изменить" type="submit">
+                  <input type="hidden" value="'.$row['actionID'].'" name="idInput"/>
+                  <button name="workaction" id="'.$row['actionID'].'" class="btn btn-danger deleteRowButton mb-1" value="actionID" type="button">Удалить</button>
+                </form>
                 </td>';
                 echo '</tr>';
               }

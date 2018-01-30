@@ -2,7 +2,7 @@
 		<hr>
 		<div class="inner">
 			<div class="container">
-				<p class="right"><a href="#">Вверх</a></p>
+				<p class="right mb-2"><a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i></a><a href="#" class="ml-2">Вверх</a></p>
 			</div>
 		</div>
 	</div>

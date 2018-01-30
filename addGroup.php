@@ -29,8 +29,8 @@ if (isset($_POST['categoryName'])) {
         			<button class="btn btn-primary mt-2 mb-1" type="submit">Добавить</button>
       			</div>
       		</div>
+        </form>
 	    </div>
-  </form>
 </div>
 
 <?php $view->display('footer.tpl'); ?>
