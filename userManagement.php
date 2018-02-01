@@ -12,7 +12,9 @@ $view->display('filterForm.tpl'); ?>
 
 <div class="container">
     <div class="text-right mt-2 mb-2">
-      <button name="add" onclick="location.href = './addAppointment.php'" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><a  class="ml-2">Добавить ресурс пользователя</a></button>
+      <form action="./addAppointment.php" method="post">
+        <button name="userID" class="btn btn-success" type="submit" value="<?php echo $_GET['idInput']; ?>"><i class="fa fa-plus" aria-hidden="true"></i><a  class="ml-2">Добавить ресурс пользователя</a></button>
+      </form>
     </div>
 <table class="table table-striped table-bordered table-condensed">
         <thead class="thead-dark">

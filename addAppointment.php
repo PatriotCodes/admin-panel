@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("./resources/config.php");
 require_once(LIBRARY_PATH."/view.class.php");
 require_once(LIBRARY_PATH."/db.class.php");
@@ -11,6 +12,10 @@ $success = false;
 $categories = $db->query("SELECT * FROM actioncategory");
 $resOptions = array();
 
+if(isset($_POST['userID'])) {
+  $_SESSION['userID'] = $_POST['userID'];
+}
+
 if (isset($_GET['idReq'])) {
   $tmpCat = $db->query("SELECT * FROM actioncategory WHERE categoryID = '$_GET[idReq]'");
   $setCat = $tmpCat[0];
@@ -18,6 +23,12 @@ if (isset($_GET['idReq'])) {
 } else {
   $setCat = $categories[0];
   $idReq = $categories[0]['categoryID'];
+}
+
+if (isset($_POST['resourceOptions']) && isset($_POST['fromDate'])) {
+  foreach ($_POST['resourceOptions'] as $actID) {
+    $db->query("INSERT INTO appointment (workerID, actionID, fromDate, toDate) VALUES ('$_SESSION[userID]','$actID','$_POST[fromDate]','$_POST[toDate]');");
+  }
 }
 
 $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
@@ -42,13 +53,13 @@ $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
           <label class="mt-2">От:</label>
         	<div class="col-md-5">
             <div class="form-group">
-              <input type="datetime-local" class="form-control" name="fromDate" id="from">
+              <input type="date" class="form-control" name="fromDate" id="from">
             </div>
       		</div>
       	</div>
       	<div class="form-row">
       		<div class="col-md-6">
-      			<select multiple name="resourceOptions" class="custom-select" id="resourceOptions" required>
+      			<select multiple name="resourceOptions[]" class="custom-select" id="resourceOptions" required>
               <?php foreach($resources as $resource) {
                 echo '<option value='.$resource['actionID'].'>'.$resource['actionName'].'</option>';
               }?>
@@ -57,7 +68,7 @@ $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
           <label class="mt-2">До:</label>
       		<div class="col-md-5">
       			<div class="form-group">
-              <input type="datetime-local" class="form-control" name="toDate" id="to">
+              <input type="date" class="form-control" name="toDate" id="to">
             </div>
       		</div>
   		</div>
