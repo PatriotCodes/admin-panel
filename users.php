@@ -6,14 +6,27 @@ require_once(LIBRARY_PATH."/db.class.php");
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
 $view->display('header.tpl');
-$colNames = array('ID','Логин');
-$tableColNames = array('workerID','username');
+$colNames = array('Логин');
+$tableColNames = array('username');
+$view->set('idName','workerID');
 $view->set('options',$colNames);
 $view->set('tableName','worker');
 $view->set('tableColNames',$tableColNames);
 $view->set('actionPage','./userManagement.php');
 $view->set('actionName','Управление ресурсами');
 $view->set('isDeletable',true);
+
+if (isset($_POST['search'])) {
+	$view->set('likeClause',"WHERE username LIKE '%".$_POST['search']."%'");
+}
+
+if (isset($_POST['groupOption'])) {
+	if ($_POST['groupOption'] != '#') {
+		$view->set('orderClause',"ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption']);
+	} else {
+		$view->set('orderClause',"ORDER BY workerID ".$_POST['orderOption']);
+	}
+}
 
 $view->display('filterForm.tpl');
 ?>

@@ -6,9 +6,14 @@ require_once(LIBRARY_PATH."/db.class.php");
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
 $view->display('header.tpl');
-$colNames = array('ID','Название','Строка','Аргументы','Группа');
+$colNames = array('Название','Строка','Аргументы','Группа');
 $view->set('options',$colNames);
 $view->display('filterForm.tpl');
+
+$focusID = -1;
+if (isset($_POST['idInput'])) {
+  $focusID = $_POST['idInput'];
+}
 ?>
 
 	<div class="container">
@@ -18,7 +23,7 @@ $view->display('filterForm.tpl');
   <table class="table table-striped table-bordered table-condensed">
         <thead class="thead-dark">
 	        <tr>
-            <th scope="col">ID</th>
+            <th scope="col">№</th>
             <th scope="col">Название</th>
             <th scope="col">Строка</th>
             <th scope="col">Аргументы</th>
@@ -31,10 +36,17 @@ $view->display('filterForm.tpl');
               $db = new DB();
               $actions = $db->query("SELECT * FROM workaction");
               if ($actions) {
+                $counter = 0;
                 foreach($actions as $row) {
+                  $counter++;
                   $category = $db->query("SELECT categoryName FROM actioncategory WHERE categoryID = '$row[categoryID]'");
-                  echo '<tr>';
-                  echo '<td scope="row">'.$row['actionID'].'</td>';
+                  echo '<tr ';
+                    if ($focusID != -1) { 
+                      if ($focusID == $row['categoryID']) { 
+                        echo 'class=bg-info';
+                      } 
+                    } echo '>';
+                  echo '<td scope="row">'.$counter.'</td>';
                   echo '<td>'.$row['actionName'].'</td>';
                   echo '<td>'.$row['actionString'].'</td>';
                   echo '<td>'.$row['actionArguments'].'</td>';

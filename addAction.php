@@ -18,6 +18,7 @@ if (isset($_POST['actionName']) && isset($_POST['path']) && isset($_POST['args']
 ?>
 
 <div class="container">
+  <h4 class="mt-4">Добавление ресурса</h4>
     <form class="form-control mt-4" method="post">
     	<div class="form-row">
    	    	<div class="col-md-6 mb-3">

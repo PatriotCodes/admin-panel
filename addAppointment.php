@@ -14,6 +14,8 @@ $resOptions = array();
 
 if(isset($_POST['userID'])) {
   $_SESSION['userID'] = $_POST['userID'];
+  $tmpSelect = $db->query("SELECT username FROM worker WHERE workerID = '$_SESSION[userID]'");
+  $username = $tmpSelect[0]['username'];
 }
 
 if (isset($_GET['idReq'])) {
@@ -35,6 +37,7 @@ $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
 ?>
 
 <div class="container">
+  <h4 class="mt-4">Добавление ресурса пользователю <strong><?php echo $username?></strong></h4>
     <form class="form-control mt-4" method="post">
     	<div class="form-row">
    	    	<div class="col-md-6">

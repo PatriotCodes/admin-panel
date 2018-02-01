@@ -7,8 +7,21 @@ $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
 $view->display('header.tpl');
 
-$colNames = array('ID','Название');
-$tableColNames = array('categoryID','categoryName');
+if (isset($_POST['search'])) {
+	$view->set('likeClause',"WHERE categoryName LIKE '%".$_POST['search']."%'");
+}
+
+if (isset($_POST['groupOption'])) {
+	if ($_POST['groupOption'] != '#') {
+		$view->set('orderClause',"ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption']);
+	} else {
+		$view->set('orderClause',"ORDER BY categoryID ".$_POST['orderOption']);
+	}
+}
+
+$colNames = array('Название');
+$tableColNames = array('categoryName');
+$view->set('idName','categoryID');
 $view->set('options',$colNames);
 $view->set('tableName','actioncategory');
 $view->set('tableColNames',$tableColNames);

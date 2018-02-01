@@ -7,8 +7,10 @@
         <label class="mt-3" for="inputPassword4">Сортировать по:</label>
         <div class="form-group col">
         <select name="groupOption" class="custom-select mt-2" required>
-              <?php foreach($this->options as $option) {
-                echo '<option value='.$option.'>'.$option.'</option>';
+              <?php 
+              echo '<option value="#">Номер</option>';
+              for($index = 0; $index < count($this->options); $index++) {
+                echo '<option value='.$this->tableColNames[$index].'>'.$this->options[$index].'</option>';
               }?>
         </select>
         </div>
