@@ -21,16 +21,16 @@ if ($success) {
 <div class="container">
   <form class="form-control mt-4" method="post">
   		<div class="form-row mb-3">
-      		<input type="text" class="form-control mt-2" name="categoryName" placeholder="РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹" 
-          value="<?php echo $categoryName['categoryName'] ?>" required>
+      		<input type="text" class="form-control mt-2" name="categoryName" placeholder="Название" 
+          value="<?php echo $categoryName[0]['categoryName'] ?>" required>
       	</div>
       		<?php if($success) {
       		echo '<div class="form-row"><div class="col-md-8">
       			<div class="alert alert-success mb-2">
-  					Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ РѕР±РЅРѕРІР»РµРЅС‹! Р’С‹ Р±СѓРґРµС‚Рµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РІРѕР·РІСЂР°С‰РµРЅС‹ РЅР° СЃС‚СЂР°РЅРёС†Сѓ <a href="./groups.php" class="alert-link">РіСЂСѓРїРї</a>.</div></div><div class="col-md-4">';
+  					Данные успешно обновлены! Вы будете автоматически возвращены на странницу <a href="./groups.php" class="alert-link">групп</a>.</div></div><div class="col-md-4">';
       		} ?>
       		    <div class=text-right>
-        			<button class="btn btn-primary mt-2 mb-1" type="submit">РЎРѕС…СЂР°РЅРёС‚СЊ</button>
+        			<button class="btn btn-primary mt-2 mb-1" type="submit">Сохранить</button>
       			</div>
       		</div>
 	    </div>

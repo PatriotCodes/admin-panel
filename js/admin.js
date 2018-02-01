@@ -19,3 +19,17 @@ function DeleteRow() {
     	opacity : "hide" 
     }, 300);
 }
+
+function ChangeResOptions(catID) {
+    var resOptions = document.getElementById("resourceOptions");
+    for (var i = 0; i < resOptions.length; i++) {
+        resOptions.remove(i);
+    }
+    var curURL = location.protocol + '//' + location.host + location.pathname;
+    window.location = curURL + "?idReq=" + catID;   
+}
+
+$("a[href='#top']").click(function() {
+  window.scrollTo(x-coord, y-coord);
+  return false;
+});

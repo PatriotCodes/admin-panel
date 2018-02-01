@@ -38,16 +38,18 @@ class DB
 			if(!empty($this->index) && $this->index == odbc_field_name ($resource, $i)) $k = $i;
 			}
 			
-		    for ($i=1; $i <= $numfields; $i++)
-		    {
-			if(!empty($this->index))
-			{	
-			    $table[$row[odbc_field_name ($resource, $k)]][odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
-			}
-			elseif($num_rows > 1 && empty($this->index))
-			    $table[$r][odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
-			else
-			    $table[odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
+		    for ($i=1; $i <= $numfields; $i++) {
+				if(!empty($this->index)) {	
+			    	$table[$row[odbc_field_name ($resource, $k)]][odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
+				} elseif($num_rows > 1 && empty($this->index)) {
+			    	$table[$r][odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
+					//$table[odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
+				} elseif($num_rows == 1) {
+					$table[$r][odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
+			    	//$table[odbc_field_name ($resource, $i)] = $row[odbc_field_name ($resource, $i)];
+				} else {
+					return false;
+				}
 		    }
 		    $r++;
 			

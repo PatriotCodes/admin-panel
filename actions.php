@@ -6,23 +6,23 @@ require_once(LIBRARY_PATH."/db.class.php");
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
 $view->display('header.tpl');
-$colNames = array('ID','РќР°Р·РІР°РЅРёРµ','РЎС‚СЂРѕРєР°','РђСЂРіСѓРјРµРЅС‚С‹','Р“СЂСѓРїРїР°');
+$colNames = array('ID','Название','Строка','Аргументы','Группа');
 $view->set('options',$colNames);
 $view->display('filterForm.tpl');
 ?>
 
 	<div class="container">
   <div class="text-right mt-2 mb-2">
-        <button name="add" onclick="location.href = './addAction.php'" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><a class="ml-2">Р”РѕР±Р°РІРёС‚СЊ СЂРµСЃСѓСЂСЃ</a></button>
+        <button name="add" onclick="location.href = './addAction.php'" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><a class="ml-2">Добавить ресурс</a></button>
   </div>
   <table class="table table-striped table-bordered table-condensed">
         <thead class="thead-dark">
 	        <tr>
             <th scope="col">ID</th>
-            <th scope="col">РќР°Р·РІР°РЅРёРµ</th>
-            <th scope="col">РЎС‚СЂРѕРєР°</th>
-            <th scope="col">РђСЂРіСѓРјРµРЅС‚С‹</th>
-            <th scope="col">Р“СЂСѓРїРїР°</th>
+            <th scope="col">Название</th>
+            <th scope="col">Строка</th>
+            <th scope="col">Аргументы</th>
+            <th scope="col">Группа</th>
             <th scope="col"></th>
             </tr>
         </thead>
@@ -30,23 +30,24 @@ $view->display('filterForm.tpl');
             <?php
               $db = new DB();
               $actions = $db->query("SELECT * FROM workaction");
-              foreach($actions as $row)
-              {
-                $category = $db->query("SELECT categoryName FROM actioncategory WHERE categoryID = '$row[categoryID]'");
-                echo '<tr>';
-                echo '<td scope="row">'.$row['actionID'].'</td>';
-                echo '<td>'.$row['actionName'].'</td>';
-                echo '<td>'.$row['actionString'].'</td>';
-                echo '<td>'.$row['actionArguments'].'</td>';
-                echo '<td>'.$category['categoryName'].'</td>';
-                echo '<td class="">
-                <form action="./updateAction.php" method="get">
-                  <input name="edit" id="$row[actionID]" class="btn btn-info mb-1" value="РР·РјРµРЅРёС‚СЊ" type="submit">
-                  <input type="hidden" value="'.$row['actionID'].'" name="idInput"/>
-                  <button name="workaction" id="'.$row['actionID'].'" class="btn btn-danger deleteRowButton mb-1" value="actionID" type="button">РЈРґР°Р»РёС‚СЊ</button>
-                </form>
-                </td>';
-                echo '</tr>';
+              if ($actions) {
+                foreach($actions as $row) {
+                  $category = $db->query("SELECT categoryName FROM actioncategory WHERE categoryID = '$row[categoryID]'");
+                  echo '<tr>';
+                  echo '<td scope="row">'.$row['actionID'].'</td>';
+                  echo '<td>'.$row['actionName'].'</td>';
+                  echo '<td>'.$row['actionString'].'</td>';
+                  echo '<td>'.$row['actionArguments'].'</td>';
+                  echo '<td>'.$category[0]['categoryName'].'</td>';
+                  echo '<td class="">
+                  <form action="./updateAction.php" method="get">
+                    <input name="edit" id="$row[actionID]" class="btn btn-info mb-1" value="Изменить" type="submit">
+                    <input type="hidden" value="'.$row['actionID'].'" name="idInput"/>
+                    <input type="hidden" value="'.$row['categoryID'].'" name="idCat"/>
+                    <button name="workaction" id="'.$row['actionID'].'" class="btn btn-danger deleteRowButton mb-1" value="actionID"  type="button">Удалить</button>
+                    </form></td>';
+                  echo '</tr>';
+                }
               }
               ?>   
         </tbody>

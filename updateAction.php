@@ -16,7 +16,7 @@ if (isset($_POST['actionName']) && isset($_POST['path'])) {
   $success = false;
 }
 if ($success) { 
-  header("refresh:2;url=./groups.php"); 
+  header("refresh:2;url=./actions.php"); 
 }
 ?>
 
@@ -24,32 +24,46 @@ if ($success) {
     <form class="form-control mt-4" method="post">
     	<div class="form-row">
    	    	<div class="col-md-6 mb-3">
-       	    	<input type="text" class="form-control mt-1" id="actionName" name="actionName" value="<?php echo $action['actionName'] ?>" placeholder="РќР°Р·РІР°РЅРёРµ СЂРµСЃСѓСЂСЃР°" required>
+       	    	<input type="text" class="form-control mt-1" id="actionName" name="actionName" value="<?php echo $action[0]['actionName'] ?>" placeholder="Название ресурса" required>
         	</div>
         	<div class="col-md-6 mb-3">
-      			<input type="text" class="form-control mt-1" id="actionString" name="path" value="<?php echo $action['actionString'] ?>" placeholder="РџСѓС‚СЊ Рє РёСЃРїРѕР»РЅСЏРµРјРѕРјСѓ С„Р°Р№Р»Сѓ РёР»Рё РіРёРїРµСЂСЃСЃС‹Р»РєР°" required>
+      			<input type="text" class="form-control mt-1" id="actionString" name="path" value="<?php echo $action[0]['actionString'] ?>" placeholder="Путь к исполняемому файлу или гиперссылка" required>
       		</div>
       	</div>
       	<div class="form-row">
       		<div class="col-md-6 mb-3">
-      			<input type="text" class="form-control mt-1" id="actionArguments" name="args" value="<?php echo $action['actionArguments'] ?>" placeholder="РЎС‚СЂРѕРєР° СЃ Р°СЂРіСѓРјРµРЅС‚Р°РјРё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)">
+      			<input type="text" class="form-control mt-1" id="actionArguments" name="args" value="<?php echo $action[0]['actionArguments'] ?>" placeholder="Строка с аргументами (опционально)">
       		</div>
       		<div class="col-md-6 mb-3 mt-1">
       			<select name="groupOption" class="custom-select" required>
-      	 			<option value="">Р’С‹Р±РµСЂРёС‚Рµ РіСЂСѓРїРїСѓ СЂРµСЃСѓСЂСЃРѕРІ</option>
-      	 			<?php foreach($categories as $category) {
-      	 				echo '<option value='.$category['categoryID'].'>'.$category['categoryName'].'</option>';
-      	 			}?>
+              <?php 
+              if (count($categories) > 0) {
+                if (isset($_GET['idCat'])) {
+                  $catName = $db->query("SELECT categoryName FROM actioncategory WHERE categoryID = '$_GET[idCat]'");
+                  echo '<option value='.$_GET['idCat'].'>'.$catName[0][categoryName].'</option>';
+                } else {
+                  echo '<option value="">Выберите группу</option>';
+                }
+                if (count($categories) > 0) {
+                  foreach($categories as $category) {
+                    if ($category['categoryID'] != $_GET['idCat']) {
+                      echo '<option value='.$category['categoryID'].'>'.$category['categoryName'].'</option>';
+                    }
+                  }
+                }
+              } else {
+                echo '<option value="">Группы отсутствуют!!!</option>';
+              } ?>
       			</select>
       		</div>
   		</div>
       <?php if($success) {
           echo '<div class="form-row"><div class="col-md-8">
             <div class="alert alert-success mb-2">
-            Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ РѕР±РЅРѕРІР»РµРЅС‹! Р’С‹ Р±СѓРґРµС‚Рµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РІРѕР·РІСЂР°С‰РµРЅС‹ РЅР° СЃС‚СЂР°РЅРёС†Сѓ <a href="./actions.php" class="alert-link">СЂРµСЃСѓСЂСЃРѕРІ</a>.</div></div><div class="col-md-4">';
+            Данные успешно обновлены! Вы будете автоматически возвращены на страницу <a href="./actions.php" class="alert-link">ресурсов</a>.</div></div><div class="col-md-4">';
           } ?>
       <div class=text-right>
-        <button class="btn btn-primary mt-2 mb-2" type="submit">РЎРѕС…СЂР°РЅРёС‚СЊ</button>
+        <button class="btn btn-primary mt-2 mb-2" type="submit">Сохранить</button>
       </div>
     </div>
   </form>
