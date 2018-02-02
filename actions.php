@@ -11,8 +11,12 @@ $view->set('options',$colNames);
 $view->display('filterForm.tpl');
 
 $focusID = -1;
-if (isset($_POST['idInput'])) {
-  $focusID = $_POST['idInput'];
+
+// !!!! idInput - это ид пользователя, а нам надо id action
+
+
+if (isset($_GET['idAppointment'])) {
+  $focusID = $_GET['idAppointment'];
 }
 ?>
 
@@ -42,8 +46,8 @@ if (isset($_POST['idInput'])) {
                   $category = $db->query("SELECT categoryName FROM actioncategory WHERE categoryID = '$row[categoryID]'");
                   echo '<tr ';
                     if ($focusID != -1) { 
-                      if ($focusID == $row['categoryID']) { 
-                        echo 'class=bg-info';
+                      if ($focusID == $row['actionID']) { 
+                        echo 'class="bg-warning" id="focus"';
                       } 
                     } echo '>';
                   echo '<td scope="row">'.$counter.'</td>';

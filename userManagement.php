@@ -51,7 +51,7 @@ $view->display('filterForm.tpl'); ?>
                   echo '<td class="">
                   <form action="./actions.php" method="get">
                   <input name="edit" id="'.$appointment['actionID'].'" class="btn btn-info mb-1" value="Просмотреть ресурс" type="submit">
-                    <input type="hidden" value="'.$appointment['actionID'].'" name="idInput"/>
+                    <input type="hidden" value="'.$appointment['actionID'].'" name="idAppointment"/>
                   </form>
                   <form action="./updateAppointment.php" method="get">
                     <input name="edit" id="'.$appointment['appointmentID'].'" class="btn btn-info mb-1" value="Изменить" type="submit">

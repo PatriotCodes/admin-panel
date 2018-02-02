@@ -33,3 +33,10 @@ $("a[href='#top']").click(function() {
   window.scrollTo(x-coord, y-coord);
   return false;
 });
+
+$(document).ready(function() {
+    var highlightedRow = document.getElementById("focus");
+    $('html, body').animate({
+            scrollTop: $(highlightedRow).offset().top + 'px'
+        }, 'fast');
+});
