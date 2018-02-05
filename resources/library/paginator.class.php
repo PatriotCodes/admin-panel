@@ -17,13 +17,8 @@ class Paginator
 
     public function getData($page,$likeClause,$orderClause,$innerJoin,$names) {
         $this->_page = $page;
-        if ($page != 1) {
-            $offset = $page * $this->_limit;
-            $limit = ($offset + $this->_limit) - 1;
-        } else {
-            $offset = 0;
-            $limit = $offset + $this->_limit;
-        }
+        $limit = $page * $this->_limit;
+        $offset = ($limit - $this->_limit) + 1;
         $str = $this->_idName;
         foreach ($names as $name) {
             if ($name == 'row') {
