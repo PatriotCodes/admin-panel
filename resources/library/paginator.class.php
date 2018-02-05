@@ -78,4 +78,25 @@ class Paginator
         echo '</ul>';
         echo '</nav>';
     }
+
+    public function pageByID($id) {
+        $page = 1;
+        $rows = $this->_db->rowCount($this->_tableName,$this->_idName);
+        $pages = $rows / $this->_limit;
+        for ($index = 0; $index < $pages; $index++) {
+            $limit = $page * $this->_limit;
+            $offset = ($limit - $this->_limit) + 1;
+            $str = $this->_idName;
+            $result = $this->_db->query("SELECT * FROM ( 
+            SELECT ".$str.", ROW_NUMBER() OVER (ORDER BY ".$this->_idName.") as row 
+            FROM ".$this->_tableName.") a WHERE row BETWEEN ".$offset." AND ".$limit.";");
+            foreach ($result as $row) {
+                if ($row[$this->_idName] == $id) {
+                    return $page;
+                }
+            }
+            $page++;
+        }
+        return $page;
+    }
 }

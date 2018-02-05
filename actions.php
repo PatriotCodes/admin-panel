@@ -30,7 +30,7 @@ $view->set('actionPage','./updateAction.php');
 $view->set('isDeletable',true);
 $view->set('actionName','Изменить');
 
-$paginator = new Paginator($db,"workaction",50,"actionID");
+$paginator = new Paginator($db,"workaction",2,"actionID");
 
 if (isset($_GET['page'])) {
   $page = $_GET['page'];
@@ -38,17 +38,18 @@ if (isset($_GET['page'])) {
   $page = 1;
 }
 
+// TODO: set appropriate page for this focusID
+$view->set('focusID','');
+if (isset($_GET['idAppointment'])) {
+  $view->set('focusID',$_GET['idAppointment']);
+  $page = $paginator->pageByID($_GET['idAppointment']);
+}
+
 $rows = $paginator->getData($page,$likeClause,$orderClause,$innerJoin,$tableColNames);
 $view->set('rows',$rows);
 
 $view->display('filterForm.tpl');
 
-$view->set('focusID','');
-if (isset($_GET['idAppointment'])) {
-  $view->set('focusID',$_GET['idAppointment']);
-}
-
-// TODO: set appropriate page for this focusID
 ?>
 
 <div class="container">
