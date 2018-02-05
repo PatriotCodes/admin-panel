@@ -17,27 +17,16 @@
     <tbody>
         <?php
         	$db = new DB();
-            $rows = $db->query("SELECT * FROM $this->tableName $this->likeClause $this->orderClause");
-            $desc = false;
-            $counter = 0;
-            if (isset($_POST['groupOption'])) {
-              if ($_POST['groupOption'] != '#') {
-                $counter = 0;
-              } else if ($_POST['orderOption'] == 'DESC') {
-                $counter = count($rows) + 1;
-                $desc = true;
-              }
-            }
-            if ($rows) {
-              foreach($rows as $row) {
-                  if(!$desc) {
-                    $counter++;
-                  } else {
-                    $counter--;
-                  }
+            if ($this->rows) {
+              foreach($this->rows as $row) {
               	  $id = $row[$this->idName];
-              	  echo '<tr>';
-                  echo '<td scope="row">'.$counter.'</td>';
+              	  echo '<tr ';
+                  if ($this->focusID != '') {
+                    if ($this->focusID == $row['actionID']) { 
+                      echo 'class="bg-warning" id="focus"';
+                    } 
+                  }
+                  echo '>';
               	  foreach ($this->tableColNames as $name) {
               		    echo '<td scope="row">'.$row[$name].'</td>';
                 	  }

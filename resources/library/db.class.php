@@ -16,11 +16,23 @@ class DB
 		$this->db_server = odbc_connect($this->host,$this->username,$this->password);
 		if (!$this->db_server) die ("Could not connect to MySQL server: ".odbc_error());
     }
+
+    public function rowCount($tableName, $idName) {
+    	$this->connect();
+    	$sql = "SELECT COUNT(".$idName.") FROM ".$tableName.";";
+    	$result = odbc_exec($this->db_server,$sql);
+    	$numRows = odbc_fetch_array($result);
+    	return reset($numRows);
+    }
     
+    public function justExec($sql) {
+    	$this->connect();
+    	return odbc_exec($this->db_server,$sql);
+    }
+
     public function query($sql)
     {
 	$this->connect();
-//	echo $sql;
 	if(strtolower(substr($sql,0,6)) == 'select')
 	{
 	    $resource = odbc_exec($this->db_server,$sql);
@@ -80,6 +92,9 @@ class DB
 			return true;
 	    else
 			return false;
+	}
+	else {
+		odbc_exec($this->db_server,$sql);
 	}
 }
     

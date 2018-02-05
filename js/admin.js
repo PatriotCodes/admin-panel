@@ -37,6 +37,6 @@ $("a[href='#top']").click(function() {
 $(document).ready(function() {
     var highlightedRow = document.getElementById("focus");
     $('html, body').animate({
-            scrollTop: $(highlightedRow).offset().top + 'px'
+            scrollTop: $(highlightedRow).offset().top - (window.innerHeight / 2) + 'px'
         }, 'fast');
 });

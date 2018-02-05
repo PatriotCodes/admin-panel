@@ -8,9 +8,8 @@
         <div class="form-group col">
         <select name="groupOption" class="custom-select mt-2" required>
               <?php 
-              echo '<option value="#">Номер</option>';
               for($index = 0; $index < count($this->options); $index++) {
-                echo '<option value='.$this->tableColNames[$index].'>'.$this->options[$index].'</option>';
+                  echo '<option value='.$this->tableColNames[$index].'>'.$this->options[$index].'</option>';
               }?>
         </select>
         </div>

@@ -2,12 +2,26 @@
 require_once("./resources/config.php");
 require_once(LIBRARY_PATH."/view.class.php");
 require_once(LIBRARY_PATH."/db.class.php");
+require_once(LIBRARY_PATH."/paginator.class.php");
 
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
 $view->display('header.tpl');
-$colNames = array('Логин');
-$tableColNames = array('username');
+
+$likeClause = '';
+$orderClause = '';
+$innerJoin = '';
+
+if (isset($_POST['search'])) {
+	$likeClause = "AND username LIKE '%".$_POST['search']."%'";
+}
+
+if (isset($_POST['groupOption'])) {
+	$orderClause = "ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption'];
+}
+
+$colNames = array('Номер','Логин');
+$tableColNames = array('row','username');
 $view->set('idName','workerID');
 $view->set('options',$colNames);
 $view->set('tableName','worker');
@@ -16,17 +30,16 @@ $view->set('actionPage','./userManagement.php');
 $view->set('actionName','Управление ресурсами');
 $view->set('isDeletable',true);
 
-if (isset($_POST['search'])) {
-	$view->set('likeClause',"WHERE username LIKE '%".$_POST['search']."%'");
+$paginator = new Paginator($db,"worker",50,"workerID");
+
+if (isset($_GET['page'])) {
+	$page = $_GET['page'];
+} else {
+	$page = 1;
 }
 
-if (isset($_POST['groupOption'])) {
-	if ($_POST['groupOption'] != '#') {
-		$view->set('orderClause',"ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption']);
-	} else {
-		$view->set('orderClause',"ORDER BY workerID ".$_POST['orderOption']);
-	}
-}
+$rows = $paginator->getData($page,$likeClause,$orderClause,$innerJoin,$tableColNames);
+$view->set('rows',$rows);
 
 $view->display('filterForm.tpl');
 ?>
@@ -36,6 +49,7 @@ $view->display('filterForm.tpl');
       <button name="add" onclick="location.href = './addUser.php'" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><a  class="ml-2">Добавить пользователя</a></button>
     </div>
     <?php $view->display('table.tpl'); ?>
+    <?php $paginator->outputNavigation(); ?>
 </div>
 
 
