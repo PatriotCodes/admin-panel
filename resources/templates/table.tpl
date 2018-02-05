@@ -4,7 +4,7 @@
 <table class="table table-striped table-bordered table-condensed">
     <thead class="thead-dark">
 	    <tr>
-		<?php echo '<th scope="col">¹</th>';
+		<?php
       foreach($this->options as $name) {
     		echo '<th scope="col">'.$name.'</th>';
 		} 
