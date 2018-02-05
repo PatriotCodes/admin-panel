@@ -10,10 +10,10 @@ $view->display('header.tpl');
 
 $likeClause = '';
 $orderClause = '';
-$innerJoin = 'INNER JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID';
+$innerJoin = 'LEFT JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID';
 
 if (isset($_POST['search'])) {
-  $likeClause = "AND actionName LIKE '%".$_POST['search']."%'";
+  $likeClause = "AND actionName LIKE '%".$_POST['search']."%' OR actionString LIKE '%".$_POST['search']."%' OR actionArguments LIKE '%".$_POST['search']."%' OR categoryName LIKE '%".$_POST['search']."%'";
 }
 
 if (isset($_POST['groupOption'])) {
@@ -22,6 +22,7 @@ if (isset($_POST['groupOption'])) {
 
 $colNames = array('Номер','Название','Строка','Аргументы','Группа');
 $tableColNames = array('row','actionName','actionString','actionArguments','categoryName');
+$pagNames = array('row','actionName','actionString','actionArguments','categoryName','workaction.categoryID');
 $view->set('idName','actionID');
 $view->set('options',$colNames);
 $view->set('tableName','workaction');
@@ -29,6 +30,8 @@ $view->set('tableColNames',$tableColNames);
 $view->set('actionPage','./updateAction.php');
 $view->set('isDeletable',true);
 $view->set('actionName','Изменить');
+$hiddenVars = array('idCat' => 'categoryID');
+$view->set('hiddenVars',$hiddenVars);
 
 $paginator = new Paginator($db,"workaction",2,"actionID");
 
@@ -38,14 +41,13 @@ if (isset($_GET['page'])) {
   $page = 1;
 }
 
-// TODO: set appropriate page for this focusID
 $view->set('focusID','');
 if (isset($_GET['idAppointment'])) {
   $view->set('focusID',$_GET['idAppointment']);
   $page = $paginator->pageByID($_GET['idAppointment']);
 }
 
-$rows = $paginator->getData($page,$likeClause,$orderClause,$innerJoin,$tableColNames);
+$rows = $paginator->getData($page,$likeClause,$orderClause,$innerJoin,$pagNames);
 $view->set('rows',$rows);
 
 $view->display('filterForm.tpl');

@@ -42,7 +42,16 @@ $view->display('filterForm.tpl'); ?>
                   $action = $db->query("SELECT * FROM workAction WHERE actionID = '$appointment[actionID]'");
                   $categoryID = $action[0]['categoryID'];
                   $category = $db->query("SELECT * FROM actioncategory WHERE categoryID = '$categoryID'");           
-                  echo '<tr>';
+                  echo '<tr ';
+                  if ($appointment['toDate'] != '') {
+                    $dbDate = $appointment['toDate'];
+                    $today_date = new DateTime();
+                    $today_date = date_format($today_date, 'Y-m-d');
+                    if ((strtotime($today_date) - strtotime($dbDate)) > 0) {
+                      echo 'class="table-danger"';
+                    }
+                  }
+                  echo '>';
                   echo '<td>'.$counter.'</td>';
                   echo '<td>'.$action[0]['actionName'].'</td>';
                   echo '<td>'.$category[0]['categoryName'].'</td>';
@@ -53,9 +62,9 @@ $view->display('filterForm.tpl'); ?>
                   <input name="edit" id="'.$appointment['actionID'].'" class="btn btn-info mb-1" value="Просмотреть ресурс" type="submit">
                     <input type="hidden" value="'.$appointment['actionID'].'" name="idAppointment"/>
                   </form>
-                  <form action="./updateAppointment.php" method="get">
-                    <input name="edit" id="'.$appointment['appointmentID'].'" class="btn btn-info mb-1" value="Изменить" type="submit">
-                    <input type="hidden" value="'.$appointment['appointmentID'].'" name="idInput"/>
+                  <form action="./updateAppointment.php" method="get">';
+                     // echo '<input name="edit" id="'.$appointment['appointmentID'].'" class="btn btn-info mb-1" value="Изменить" type="submit">';
+                    echo '<input type="hidden" value="'.$appointment['appointmentID'].'" name="idInput"/>
                     <button name="appointment" id="'.$appointment['appointmentID'].'" class="btn btn-danger deleteRowButton mb-1" value="appointmentID" type="button">Удалить</button>
                   </form></td>';
                   echo '</tr>';

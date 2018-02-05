@@ -28,15 +28,23 @@
                   }
                   echo '>';
               	  foreach ($this->tableColNames as $name) {
-              		    echo '<td scope="row">'.$row[$name].'</td>';
+                    if ($row[$name] != '') {
+              		      echo '<td scope="row">'.$row[$name].'</td>';
+                      } else {
+                        echo '<td scope="row"></td>';
+                      }
                 	  }
                 	  if ($this->actionPage !== '') {
-                		  echo '<td class="">
-                  		  <form action="'.$this->actionPage.'" method="get">
-                    		  <input name="edit" id="'.$id.'" class="btn btn-info mb-1" value="'.$this->actionName.'" type="submit">
-                    		  <input type="hidden" value="'.$id.'" name="idInput"/>';
+                		  echo '<td class="">';
+                  		  echo '<form action="'.$this->actionPage.'" method="get"><input name="edit" id="'.$id.'" class="btn btn-info mb-1" value="'.$this->actionName.'" type="submit"/>';
+                          if ($this->hiddenVars != '') {
+                            foreach($this->hiddenVars as $h => $hVal) {
+                              echo '<input type="hidden" value="'.$row[$hVal].'" name="'.$h.'"/>';
+                            }
+                          }
+                    		  echo '<input type="hidden" value="'.$id.'" name="idInput"/>';
                           if ($this->isDeletable) {
-                    		  echo '<button name="'.$this->tableName.'" id="'.$id.'" class="btn btn-danger deleteRowButton mb-1" value="'.$this->idName.'" type="button">Удалить</button>';
+                    		  echo '<button name="'.$this->tableName.'" id="'.$id.'" class="btn btn-danger deleteRowButton mb-1 ml-1" value="'.$this->idName.'" type="button">Удалить</button>';
                         }
                   		  echo '</form></td>';
                 	    }
