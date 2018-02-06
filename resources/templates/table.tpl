@@ -26,6 +26,17 @@
                       echo 'class="bg-warning" id="focus"';
                     } 
                   }
+                  // for appointment table only
+                  if ($this->tableName == 'appointment') {
+                    if ($row['toDate'] != '') {
+                      $dbDate = $row['toDate'];
+                      $today_date = new DateTime();
+                      $today_date = date_format($today_date, 'Y-m-d');
+                      if ((strtotime($today_date) - strtotime($dbDate)) > 0) {
+                        echo 'class="table-danger"';
+                      }
+                    }
+                  }
                   echo '>';
               	  foreach ($this->tableColNames as $name) {
                     if ($row[$name] != '') {
@@ -36,11 +47,23 @@
                 	  }
                 	  if ($this->actionPage !== '') {
                 		  echo '<td class="">';
+                        if ($this->tableName == 'appointment') {
+                          echo '<form action="./actions.php" method="get">
+                          <input name="edit" id="'.$row['actionID'].'" class="btn btn-info mb-1" value="Просмотреть ресурс" type="submit">
+                          <input type="hidden" value="'.$row['actionID'].'" name="idAppointment"/>
+                          </form>';
+                        }
                   		  echo '<form action="'.$this->actionPage.'" method="get"><input name="edit" id="'.$id.'" class="btn btn-info mb-1" value="'.$this->actionName.'" type="submit"/>';
                           if ($this->hiddenVars != '') {
                             foreach($this->hiddenVars as $h => $hVal) {
                               echo '<input type="hidden" value="'.$row[$hVal].'" name="'.$h.'"/>';
                             }
+                          }
+                          // for appointment table only
+                          if ($this->tableName == 'appointment') {
+                            echo '<input type="hidden" name="destinationID" value="';
+                            echo $_GET['idInput'];
+                            echo '"/>';
                           }
                     		  echo '<input type="hidden" value="'.$id.'" name="idInput"/>';
                           if ($this->isDeletable) {
