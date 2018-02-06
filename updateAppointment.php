@@ -8,13 +8,14 @@ $db = new DB();
 $view->display('header.tpl');
 $date = $db->query("SELECT * FROM appointment WHERE appointmentID = '$_GET[idInput]'");
 
-if (isset($_POST['dateFrom']) && isset($_POST['dateTo']) ) {
-	$success = $db->query("UPDATE actionCategory SET categoryName = N'$_POST[categoryName]' WHERE categoryID = '$_GET[idInput]'");
+if (isset($_POST['fromDate'])) {
+	$success = $db->query("UPDATE appointment SET fromDate = '$_POST[fromDate]', toDate = '$_POST[toDate]' WHERE appointmentID = '$_GET[idInput]'");
 } else {
 	$success = false;
 }
 if ($success) { 
-  header("refresh:2;url=./userManagment.php"); 
+  echo $_GET['destinationID'];
+  header('refresh:2;url=./userManagement.php?idInput='.$_GET['destinationID']); 
 }
 ?>
 
@@ -37,7 +38,9 @@ if ($success) {
       		<?php if($success) {
       		echo '<div class="form-row"><div class="col-md-8">
       			<div class="alert alert-success mb-2">
-  					ƒанные успешно обновлены! ¬ы будете автоматически возвращены на странницу <a href="./userManagment.php" class="alert-link">управлени€ ресурсами</a>.</div></div><div class="col-md-4">';
+  					ƒанные успешно обновлены! ¬ы будете автоматически возвращены на странницу <a href="';
+            echo './userManagement.php?idInput='.$_GET['destinationID'];
+            echo '" class="alert-link">управлени€ ресурсами</a>.</div></div><div class="col-md-4">';
       		} ?>
       		    <div class=text-right>
         			<button class="btn btn-primary mt-2 mb-1" type="submit">—охранить</button>

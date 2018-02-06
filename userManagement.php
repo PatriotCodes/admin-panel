@@ -63,9 +63,12 @@ $view->display('filterForm.tpl'); ?>
                     <input type="hidden" value="'.$appointment['actionID'].'" name="idAppointment"/>
                   </form>
                   <form action="./updateAppointment.php" method="get">';
-                     // echo '<input name="edit" id="'.$appointment['appointmentID'].'" class="btn btn-info mb-1" value="Изменить" type="submit">';
-                    echo '<input type="hidden" value="'.$appointment['appointmentID'].'" name="idInput"/>
-                    <button name="appointment" id="'.$appointment['appointmentID'].'" class="btn btn-danger deleteRowButton mb-1" value="appointmentID" type="button">Удалить</button>
+                     echo '<input name="edit" id="'.$appointment['appointmentID'].'" class="btn btn-info mb-1" value="Изменить" type="submit">
+                    <input type="hidden" value="'.$appointment['appointmentID'].'" name="idInput"/>
+                    <input type="hidden" name="destinationID" value="';
+                    echo $_GET['idInput'];
+                    echo '"/>';
+                    echo '<button name="appointment" id="'.$appointment['appointmentID'].'" class="btn btn-danger deleteRowButton mb-1" value="appointmentID" type="button">Удалить</button>
                   </form></td>';
                   echo '</tr>';
                 }

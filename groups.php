@@ -40,6 +40,7 @@ if (isset($_GET['page'])) {
 
 $rows = $paginator->getData($page,$likeClause,$orderClause,$innerJoin,$tableColNames);
 $view->set('rows',$rows);
+$view->set('alertMes',true);
 
 $view->display('filterForm.tpl'); ?>
 

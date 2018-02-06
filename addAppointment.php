@@ -29,7 +29,11 @@ if (isset($_GET['idReq'])) {
 
 if (isset($_POST['resourceOptions']) && isset($_POST['fromDate'])) {
   foreach ($_POST['resourceOptions'] as $actID) {
+    if ($_POST['toDate'] != '') {
     $db->query("INSERT INTO appointment (workerID, actionID, fromDate, toDate) VALUES ('$_SESSION[userID]','$actID','$_POST[fromDate]','$_POST[toDate]');");
+    } else {
+      $db->query("INSERT INTO appointment (workerID, actionID, fromDate, toDate) VALUES ('$_SESSION[userID]','$actID','$_POST[fromDate]',NULL);");
+    }
   }
 }
 

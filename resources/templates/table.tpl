@@ -44,12 +44,20 @@
                           }
                     		  echo '<input type="hidden" value="'.$id.'" name="idInput"/>';
                           if ($this->isDeletable) {
-                    		  echo '<button name="'.$this->tableName.'" id="'.$id.'" class="btn btn-danger deleteRowButton mb-1 ml-1" value="'.$this->idName.'" type="button">Удалить</button>';
-                        }
-                  		  echo '</form></td>';
-                	    }
-                	    echo '</tr>';
-              	    }
-                  } ?>   
+                            $check = false;
+                            if ($this->alertMes != '') {
+                              $check = $this->alertMes;
+                            }
+                            if ($check) {
+                              echo '<button name="'.$this->tableName.'" id="'.$id.'" class="btn btn-danger deleteRowButtonCheck mb-1 ml-1"  value="'.$this->idName.'" type="button">Удалить</button>';
+                              } else {
+                    		      echo '<button name="'.$this->tableName.'" id="'.$id.'" class="btn btn-danger deleteRowButton mb-1 ml-1"  value="'.$this->idName.'" type="button">Удалить</button>';
+                              }
+                          } 
+                  		    echo '</form></td>';
+                	     }
+                	     echo '</tr>';
+              	     }
+                    } ?>   
         </tbody>
 </table>

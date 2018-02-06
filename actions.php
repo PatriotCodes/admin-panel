@@ -33,7 +33,7 @@ $view->set('actionName','Изменить');
 $hiddenVars = array('idCat' => 'categoryID');
 $view->set('hiddenVars',$hiddenVars);
 
-$paginator = new Paginator($db,"workaction",2,"actionID");
+$paginator = new Paginator($db,"workaction",50,"actionID");
 
 if (isset($_GET['page'])) {
   $page = $_GET['page'];
