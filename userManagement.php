@@ -10,7 +10,7 @@ if(isset($_GET['idInput'])) {
 
 $likeClause = '';
 $orderClause = '';
-$innerJoin = 'LEFT JOIN workaction ON workaction.actionID = appointment.actionID INNER JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID';
+$innerJoin = 'LEFT JOIN workaction ON workaction.actionID = appointment.actionID INNER JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID WHERE appointment.workerID = '.$_GET['idInput'];
 
 if (isset($_POST['search'])) {
   $likeClause = "AND actionName LIKE '%".$_POST['search']."%'";
