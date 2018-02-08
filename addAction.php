@@ -2,6 +2,7 @@
 require_once("./resources/config.php");
 require_once(LIBRARY_PATH."/view.class.php");
 require_once(LIBRARY_PATH."/db.class.php");
+require_once(LIBRARY_PATH."/pathParser.php");
 
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
@@ -10,8 +11,10 @@ $view->display('header.tpl');
 $categories = $db->query("SELECT * FROM actioncategory");
 
 if (isset($_POST['actionName']) && isset($_POST['path']) && isset($_POST['args'])) {
+  $inPath = parsePath($_POST['path']);
+  echo "IN PATH: ".$inPath;
   $success = $db->query("INSERT INTO workaction (actionName, actionString, actionArguments, categoryID
-) VALUES (N'$_POST[actionName]',N'$_POST[path]',N'$_POST[args]','$_POST[groupOption]');");
+) VALUES (N'$_POST[actionName]',N'$inPath',N'$_POST[args]','$_POST[groupOption]');");
 } else {
   $success = false;
 }

@@ -25,13 +25,13 @@ if ($success) {
       <label class="mt-2">От:</label>
         <div class="col-md-5">
           <div class="form-group">
-      		<input type="date" class="form-control" name="fromDate" id="from">
+      		<input type="date" class="form-control" name="fromDate" id="from" value="<?php echo $date[0]['fromDate'];?>">
         </div>
       </div>
       <label class="mt-2">До:</label>
         <div class="col-md-5">
           <div class="form-group">
-          <input type="date" class="form-control" name="toDate" id="to">
+          <input type="date" class="form-control" name="toDate" id="to" value="<?php echo $date[0]['toDate'];?>">
         </div>
       </div>
       	</div>

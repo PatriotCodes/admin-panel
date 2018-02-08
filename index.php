@@ -1,9 +1,9 @@
-<?php
-require_once("./resources/config.php");
-require_once(LIBRARY_PATH."/view.class.php");
-require_once(LIBRARY_PATH."/db.class.php");
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Refresh" content="0; url=users.php">
+</head>
+<body>
 
-$view = new View(TEMPLATES_PATH."/");
-$view->display('header.tpl');
-$view->display('footer.tpl');
-?>
+</body>
+</html>

@@ -12,12 +12,12 @@ $likeClause = '';
 $orderClause = '';
 $innerJoin = '';
 
-if (isset($_POST['search'])) {
-	$likeClause = "AND categoryName LIKE '%".$_POST['search']."%'";
+if (isset($_GET['search'])) {
+	$likeClause = "AND categoryName LIKE '%".$_GET['search']."%'";
 }
 
-if (isset($_POST['groupOption'])) {
-	$orderClause = "ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption'];
+if (isset($_GET['groupOption'])) {
+	$orderClause = "ORDER BY ".$_GET['groupOption']." ".$_GET['orderOption'];
 }
 
 $colNames = array('Номер','Название');

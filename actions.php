@@ -12,12 +12,12 @@ $likeClause = '';
 $orderClause = '';
 $innerJoin = 'LEFT JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID';
 
-if (isset($_POST['search'])) {
-  $likeClause = "AND actionName LIKE '%".$_POST['search']."%' OR actionString LIKE '%".$_POST['search']."%' OR actionArguments LIKE '%".$_POST['search']."%' OR categoryName LIKE '%".$_POST['search']."%'";
+if (isset($_GET['search'])) {
+  $likeClause = "AND actionName LIKE '%".$_GET['search']."%' OR actionString LIKE '%".$_GET['search']."%' OR actionArguments LIKE '%".$_GET['search']."%' OR categoryName LIKE '%".$_GET['search']."%'";
 }
 
-if (isset($_POST['groupOption'])) {
-    $orderClause = "ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption'];
+if (isset($_GET['groupOption'])) {
+    $orderClause = "ORDER BY ".$_GET['groupOption']." ".$_GET['orderOption'];
 }
 
 $colNames = array('Номер','Название','Строка','Аргументы','Группа');

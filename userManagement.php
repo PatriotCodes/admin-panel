@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("./resources/config.php");
 require_once(LIBRARY_PATH."/view.class.php");
 require_once(LIBRARY_PATH."/db.class.php");
@@ -10,14 +11,14 @@ if(isset($_GET['idInput'])) {
 
 $likeClause = '';
 $orderClause = '';
-$innerJoin = 'LEFT JOIN workaction ON workaction.actionID = appointment.actionID INNER JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID WHERE appointment.workerID = '.$_GET['idInput'];
+$innerJoin = 'LEFT JOIN workaction ON workaction.actionID = appointment.actionID INNER JOIN actioncategory ON workaction.categoryID = actioncategory.categoryID WHERE appointment.workerID = '.$_SESSION['userID'];
 
-if (isset($_POST['search'])) {
-  $likeClause = "AND actionName LIKE '%".$_POST['search']."%'";
+if (isset($_GET['search'])) {
+  $likeClause = "AND actionName LIKE '%".$_GET['search']."%' OR categoryName LIKE '%".$_GET['search']."%' OR fromDate LIKE '%".$_GET['search']."%' OR toDate LIKE '%".$_GET['search']."%'";
 }
 
-if (isset($_POST['groupOption'])) {
-  $orderClause = "ORDER BY ".$_POST['groupOption']." ".$_POST['orderOption'];
+if (isset($_GET['groupOption'])) {
+  $orderClause = "ORDER BY ".$_GET['groupOption']." ".$_GET['orderOption'];
 }
 
 $view = new View(TEMPLATES_PATH."/");
@@ -52,7 +53,7 @@ $view->set('rows',$rows);
 <div class="container">
     <div class="text-right mt-2 mb-2">
       <form action="./addAppointment.php" method="post">
-        <button name="userID" class="btn btn-success" type="submit" value="<?php echo $_GET['idInput']; ?>"><i class="fa fa-plus" aria-hidden="true"></i><a  class="ml-2">Добавить ресурс пользователя</a></button>
+        <button name="userID" class="btn btn-success" type="submit" value="<?php echo $_SESSION['userID']; ?>"><i class="fa fa-plus" aria-hidden="true"></i><a  class="ml-2">Добавить ресурс пользователя</a></button>
       </form>
     </div>
     <?php $view->display('table.tpl'); ?>

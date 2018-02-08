@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="form-control mt-4" method="post">
+  <form class="form-control mt-4" method="get">
   		<div class="form-group row mb-0">
         <div class="form-group col-4">
       		<input type="text" class="form-control mt-2" name="search" placeholder="Поиск">
