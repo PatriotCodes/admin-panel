@@ -2,6 +2,7 @@
 require_once("./resources/config.php");
 require_once(LIBRARY_PATH."/view.class.php");
 require_once(LIBRARY_PATH."/db.class.php");
+require_once(LIBRARY_PATH."/pathParser.php");
 
 $view = new View(TEMPLATES_PATH."/");
 $db = new DB();
@@ -11,7 +12,8 @@ $categories = $db->query("SELECT * FROM actioncategory");
 $action = $db->query("SELECT * FROM workAction WHERE actionID = '$_GET[idInput]'");
 
 if (isset($_POST['actionName']) && isset($_POST['path'])) {
-  $success = $db->query("UPDATE workAction SET actionName = N'$_POST[actionName]', actionString=N'$_POST[path]', actionArguments=N'$_POST[args]', categoryID = $_POST[groupOption] WHERE actionID = '$_GET[idInput]';");
+  $inPath = parsePath($_POST['path']);
+  $success = $db->query("UPDATE workAction SET actionName = N'$_POST[actionName]', actionString=N'$inPath', actionArguments=N'$_POST[args]', categoryID = $_POST[groupOption] WHERE actionID = '$_GET[idInput]';");
 } else {
   $success = false;
 }

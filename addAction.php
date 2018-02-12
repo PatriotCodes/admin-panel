@@ -12,7 +12,6 @@ $categories = $db->query("SELECT * FROM actioncategory");
 
 if (isset($_POST['actionName']) && isset($_POST['path']) && isset($_POST['args'])) {
   $inPath = parsePath($_POST['path']);
-  echo "IN PATH: ".$inPath;
   $success = $db->query("INSERT INTO workaction (actionName, actionString, actionArguments, categoryID
 ) VALUES (N'$_POST[actionName]',N'$inPath',N'$_POST[args]','$_POST[groupOption]');");
 } else {
