@@ -19,12 +19,15 @@ if(isset($_POST['userID'])) {
 }
 
 if (isset($_GET['idReq'])) {
-  $tmpCat = $db->query("SELECT * FROM actioncategory WHERE categoryID = '$_GET[idReq]'");
-  $setCat = $tmpCat[0];
-  $idReq = $_GET['idReq'];
+  if ($_GET['idReq'] != -1) { 
+    $tmpCat = $db->query("SELECT * FROM actioncategory WHERE categoryID = '$_GET[idReq]'");
+    $setCat = $tmpCat[0];
+    $idReq = $_GET['idReq'];
+  } else {
+    $idReq = -1;
+  }
 } else {
-  $setCat = $categories[0];
-  $idReq = $categories[0]['categoryID'];
+  $idReq = -1;
 }
 
 if (isset($_POST['resourceOptions']) && isset($_POST['fromDate'])) {
@@ -37,7 +40,11 @@ if (isset($_POST['resourceOptions']) && isset($_POST['fromDate'])) {
   }
 }
 
-$resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
+if ($idReq != -1) {
+  $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
+} else {
+  $resources = $db->query("SELECT * from workaction WHERE categoryID IS NULL OR categoryID NOT IN (SELECT categoryID from actioncategory)");
+}
 ?>
 
 <div class="container">
@@ -48,12 +55,18 @@ $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
        	    	<select name="groupOption" class="custom-select"  onchange="ChangeResOptions(this.value);" required>
                 <?php 
                 if (count($categories) > 0) {
-                  echo '<option class="changeResOptions" value='.$setCat['categoryID'].'>'.$setCat['categoryName'].'</option>';
+                  if ($idReq == -1) {
+                    echo '<option value="-1">-- Без группы --</option>';
+                  } else {
+                    echo '<option class="changeResOptions" value='.$setCat['categoryID'].'>'.$setCat['categoryName'].'</option>';
+                  }
                 foreach($categories as $category) {
                     if ($category != $setCat) {
                       echo '<option value='.$category['categoryID'].'>'.$category['categoryName'].'</option>';
                     }
                   }
+                } if ($idReq != -1) {
+                  echo '<option value="-1">-- Без группы --</option>';
                 }?>
               </select>
         	</div>
@@ -66,7 +79,7 @@ $resources = $db->query("SELECT * from workaction WHERE categoryID = '$idReq'");
       	</div>
       	<div class="form-row">
       		<div class="col-md-6">
-      			<select multiple name="resourceOptions[]" class="custom-select" id="resourceOptions" required>
+      			<select multiple name="resourceOptions[]" class="custom-select" size=12 id="resourceOptions" required>
               <?php foreach($resources as $resource) {
                 echo '<option value='.$resource['actionID'].'>'.$resource['actionName'].'</option>';
               }?>

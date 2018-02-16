@@ -8,13 +8,16 @@ $db = new DB();
 $view->display('header.tpl');
 $date = $db->query("SELECT * FROM appointment WHERE appointmentID = '$_GET[idInput]'");
 
-if (isset($_POST['fromDate'])) {
-	$success = $db->query("UPDATE appointment SET fromDate = '$_POST[fromDate]', toDate = '$_POST[toDate]' WHERE appointmentID = '$_GET[idInput]'");
+if (isset($_POST['fromDate']) && isset($_POST['toDate'])) {
+  if ($_POST['toDate'] != '') {
+	 $success = $db->query("UPDATE appointment SET fromDate = '$_POST[fromDate]', toDate = '$_POST[toDate]' WHERE appointmentID = '$_GET[idInput]'");
+  } else {
+    $success = $db->query("UPDATE appointment SET fromDate = '$_POST[fromDate]', toDate = NULL WHERE appointmentID = '$_GET[idInput]'");
+  }
 } else {
 	$success = false;
 }
 if ($success) { 
-  echo $_GET['destinationID'];
   header('refresh:2;url=./userManagement.php?idInput='.$_GET['destinationID']); 
 }
 ?>

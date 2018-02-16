@@ -30,9 +30,7 @@
                   if ($this->tableName == 'appointment') {
                     if ($row['toDate'] != '') {
                       $dbDate = $row['toDate'];
-                      $today_date = new DateTime();
-                      $today_date = date_format($today_date, 'Y-m-d');
-                      if ((strtotime($today_date) - strtotime($dbDate)) > 0) {
+                      if ((strtotime($dbDate) < time())) {
                         echo 'class="table-danger"';
                       }
                     }

@@ -35,8 +35,8 @@ if (isset($_POST['actionName']) && isset($_POST['path']) && isset($_POST['args']
       			<input type="text" class="form-control mt-1" id="actionArguments" name="args" placeholder="Строка с аргументами (опционально)">
       		</div>
       		<div class="col-md-6 mb-3 mt-1">
-      			<select name="groupOption" class="custom-select" required>
-      	 			<option value="">Выберите группу ресурсов</option>
+      			<select name="groupOption" class="custom-select">
+      	 			<option value="">-- Без группы --</option>
               <?php foreach($categories as $category) {
                 echo '<option value='.$category['categoryID'].'>'.$category['categoryName'].'</option>';
               }?>

@@ -9,7 +9,11 @@ function parsePath($inputString) {
 		if ($inputString[$index] == '\\') {
 			if ($index != (strlen($inputString) - 1)) {
 				if ($inputString[$index + 1] != '\\') {
-					$result .= '\\';
+					if ($index != 0) {
+						if ($inputString[$index - 1] != '\\') {
+							$result .= '\\';
+						}
+					}
 				}
 			} else {
 				return $result;
